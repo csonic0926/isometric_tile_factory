@@ -1359,3 +1359,9 @@ Status: completed.
   - `python3 -m unittest tests.test_prop_asset_workflow tests.test_reference_pair_workflow_provider tests.test_variant_selector_floor_mapping tests.test_variant_selector_wall_validation -v`
   - `python3 -m py_compile pipeline/reference_pair_workflow.py itf.py pipeline/prop_asset_workflow.py pipeline/tile_reskin_workflow.py`
 - Not changed: the existing `cliproxyapi` preflight/auto-start fallback and the Gemini `--key=company` follow-up.
+
+## GPT-6 integration (2026-09-06)
+
+Provider/render workflow unchanged. Shared v3 result consumption keeps technical
+quality separate from gameplay/creative acceptance. Reference mapping tests now
+accept the explicit read-only fixture directory documented in REPO_MEMORY.md.

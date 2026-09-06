@@ -14,12 +14,14 @@ installed manifest or this skill's real source path. If unlinked, invoke
 2. MIGRATION_REQUIRED: preview `migrate --check --project-id <id>`; apply only
    an explicitly authorized migration with its exact source digest. No automatic
    approval/history conversion. Legacy CLI calls/parameters remain supported.
-3. For v2 run `factory.py context --game-repo $GAME_REPO --capability studio
+3. For an explicitly versioned project run `factory.py context --game-repo $GAME_REPO --capability studio
    --task objective` with the actual task kind and current task id when known.
-4. Follow `$STUDIO_ROOT/factory_core/docs/WORKFLOW.md` and the returned capability
-   rules. Continue in this primary agent; load task methods only as needed.
+4. Use the inspected version: v2 follows `$STUDIO_ROOT/factory_core/docs/WORKFLOW.md`;
+   v3 follows `$STUDIO_ROOT/factory_core/docs/WORKFLOW_GPT6.md` and the returned
+   capability rules. Never infer upgrade from the model name. Continue in this primary agent; load task methods only as needed.
    Freeze one full design, run the two independent reviews on its exact hash,
-   obtain required USER rulings, produce within scope, then exact-output
+   repair FAILs continuously within authority, obtain required USER rulings,
+   produce within scope, then exact-output
    evidence and specialist acceptance. Ordinary replies do not create reviews.
 5. Checkpoint validated references, progress and unresolved questions. A resumed
    session rechecks the ledger; context views and technical success are not
@@ -29,3 +31,9 @@ Whole-game delivery still requires new gameplay acceptance, exact-build USER pla
 
 v1 reference (read only for historical interpretation or domain detail):
 `$STUDIO_ROOT/studio/docs/ORCHESTRATION_V1.md`.
+
+GPT-6 opt-in is explicit: `migrate --workflow gpt6 --check`, then authorized
+`--apply --expected <digest>`. Keep global skills/stable consumers unchanged.
+`context --method <id>` loads a specific optional technique; selected methods
+belong in the sealed design. Read the selected checkout's skill, not a conflicting
+installed copy. `--project-root` aliases `--game-repo`, including pure Story.

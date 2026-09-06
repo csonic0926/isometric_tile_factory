@@ -26,3 +26,10 @@ python3 <STUDIO_ROOT>/setup.py link --game-repo <GAME_REPO>
 
 Continue the user's original Studio/specialist request in the same call. Linkage
 supplies routing only; it is not product, gameplay, or acceptance authority.
+
+GPT-6 activation is not an ordinary relink. Preview `factory.py migrate
+--workflow gpt6 --project-root <root> --project-id <id> --check` from the explicitly
+selected checkout, then apply only the authorized exact digest. This transaction
+sets the local pointer and routing together. Never install experimental skills
+globally or use the stable checkout to relink a v3 project. Interrupted migrations
+are recovered first; existing v2 projects keep their original behavior.

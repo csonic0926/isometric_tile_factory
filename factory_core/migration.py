@@ -115,8 +115,12 @@ def source_set(game: Path, authority_paths=()) -> dict:
 
 def preview(game: Path, factory: Path, project_id: str, authority_paths=()) -> dict:
     identifier(project_id)
+    if confined(game, 'design/factory/.migration-gpt6.json').exists():
+        fail('MIGRATION_RECOVERY_REQUIRED', 'finish the GPT-6 opt-in transaction first')
     if confined(game, PROJECT_PATH).exists() and not confined(game, JOURNAL).exists():
         p = project(game)
+        if p['workflow_version'] != 2:
+            fail('WORKFLOW_SELECTION_REQUIRED', 'v3 requires explicit --workflow gpt6; no implicit downgrade')
         if p["project_id"] != project_id or sorted(authority_paths) != p["authority_paths"]:
             fail("MIGRATION_CONFLICT", "existing migration identity/authorities differ")
         return {"status": "ALREADY_MIGRATED", "changes": [], "source_digest": p["migration_source_digest"]}
@@ -253,5 +257,15 @@ def routing_reference_valid(game: Path, relative: str, expected: str) -> bool:
     receipt = read_json(receipt_path)
     import hashlib
     current = confined(game, relative)
-    return (receipt.get("before_sha256") == expected and receipt.get("after_sha256") == sha(current)
-            and receipt.get("outside_routing_sha256") == hashlib.sha256(split_routing(current.read_text()).encode()).hexdigest())
+    outside = hashlib.sha256(split_routing(current.read_text()).encode()).hexdigest()
+    if receipt.get('after_sha256') != sha(current) or receipt.get('outside_routing_sha256') != outside:
+        return False
+    chain = [receipt, *reversed(receipt.get('predecessors', []))]
+    after = sha(current)
+    for step in chain:
+        if step.get('after_sha256') != after or step.get('outside_routing_sha256') != outside:
+            return False
+        if step.get('before_sha256') == expected:
+            return True
+        after = step.get('before_sha256')
+    return False

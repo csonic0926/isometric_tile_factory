@@ -1,0 +1,1042 @@
+{
+  "schema_version": "factory_knowledge.v1",
+  "methods": [
+    {
+      "id": "idea.reference-dialogue",
+      "capabilities": [
+        "idea",
+        "studio"
+      ],
+      "tasks": [
+        "*"
+      ],
+      "source": "idea/methods/reference-dialogue.md",
+      "when": "Shared product understanding needs concrete reference dialogue.",
+      "legacy_sources": []
+    },
+    {
+      "id": "gameplay.causal-interaction",
+      "capabilities": [
+        "gameplay",
+        "studio"
+      ],
+      "tasks": [
+        "*"
+      ],
+      "source": "gameplay/methods/causal-interaction.md",
+      "when": "Player work, carry-forward, scene/time or second-lap causality is unclear.",
+      "legacy_sources": []
+    },
+    {
+      "id": "story.world-character",
+      "capabilities": [
+        "story"
+      ],
+      "tasks": [
+        "world",
+        "character"
+      ],
+      "source": "story/core/methods/world-character.md",
+      "when": "Use the technique when a specific creative/continuity problem needs it.",
+      "legacy_sources": [
+        "story/core/steps/world/README.md",
+        "story/core/steps/world/STEP_0_5_WORLD_CONCEPT_REVIEW.md",
+        "story/core/steps/world/STEP_0_WORLD_CONCEPT_FRAMING.md",
+        "story/core/steps/world/STEP_1_5_WORLD_RULES_REVIEW.md",
+        "story/core/steps/world/STEP_1_WORLD_RULES_AND_CONSTRAINTS.md",
+        "story/core/steps/world/STEP_2_5_GEOGRAPHY_REVIEW.md",
+        "story/core/steps/world/STEP_2_GEOGRAPHY_AND_LOCATIONS.md",
+        "story/core/steps/world/STEP_3_5_INSTITUTIONS_REVIEW.md",
+        "story/core/steps/world/STEP_3_INSTITUTIONS_AND_DAILY_ORDER.md",
+        "story/core/steps/world/STEP_4_5_OBJECTS_AND_MOVEMENT_REVIEW.md",
+        "story/core/steps/world/STEP_4_OBJECTS_AND_MOVEMENT.md",
+        "story/core/steps/world/STEP_5_5_DIGITAL_TWIN_PACKAGING_REVIEW.md",
+        "story/core/steps/world/STEP_5_DIGITAL_TWIN_PACKAGING.md",
+        "story/core/steps/world/STEP_6_5_WORLD_BASELINE_REVIEW.md",
+        "story/core/steps/world/STEP_6_WORLD_CONSISTENCY_QA.md",
+        "story/core/steps/character/README.md",
+        "story/core/steps/character/STEP_0_5_CHARACTER_CONCEPT_REVIEW.md",
+        "story/core/steps/character/STEP_0_CHARACTER_CONCEPT_FRAMING.md",
+        "story/core/steps/character/STEP_1_5_WORLD_POSITION_REVIEW.md",
+        "story/core/steps/character/STEP_1_WORLD_POSITION_AND_DAILY_ROLE.md",
+        "story/core/steps/character/STEP_2_5_BEHAVIOR_REVIEW.md",
+        "story/core/steps/character/STEP_2_BEHAVIOR_AND_SPEAKING_PATTERN.md",
+        "story/core/steps/character/STEP_3_5_KNOWLEDGE_AND_RELATIONS_REVIEW.md",
+        "story/core/steps/character/STEP_3_KNOWLEDGE_AND_RELATIONS.md",
+        "story/core/steps/character/STEP_4_5_CHARACTER_PACKAGING_REVIEW.md",
+        "story/core/steps/character/STEP_4_CHARACTER_PACKAGING.md",
+        "story/core/steps/character/STEP_5_5_CHARACTER_BASELINE_REVIEW.md",
+        "story/core/steps/character/STEP_5_CHARACTER_CONSISTENCY_QA.md"
+      ]
+    },
+    {
+      "id": "story.cast-pressure",
+      "capabilities": [
+        "story"
+      ],
+      "tasks": [
+        "cast"
+      ],
+      "source": "story/core/methods/cast-pressure.md",
+      "when": "Use the technique when a specific creative/continuity problem needs it.",
+      "legacy_sources": [
+        "story/core/steps/cast/README.md",
+        "story/core/steps/cast/STEP_0_5_CAST_SCOPE_REVIEW.md",
+        "story/core/steps/cast/STEP_0_CAST_SCOPE_FRAMING.md",
+        "story/core/steps/cast/STEP_1_5_CAST_AUDIT_REVIEW.md",
+        "story/core/steps/cast/STEP_1_AUDIT_CURRENT_CAST.md",
+        "story/core/steps/cast/STEP_2_5_MISSING_AND_OVERLAP_REVIEW.md",
+        "story/core/steps/cast/STEP_2_IDENTIFY_MISSING_AND_OVERLAP.md",
+        "story/core/steps/cast/STEP_3_5_REBALANCE_REVIEW.md",
+        "story/core/steps/cast/STEP_3_RELATIONSHIP_AND_PRESSURE_REBALANCE.md",
+        "story/core/steps/cast/STEP_4_5_CAST_ACTION_REQUEST_REVIEW.md",
+        "story/core/steps/cast/STEP_4_GENERATE_CAST_ACTION_REQUESTS.md",
+        "story/core/steps/cast/STEP_5_5_CAST_BASELINE_REVIEW.md",
+        "story/core/steps/cast/STEP_5_CAST_SUFFICIENCY_QA.md"
+      ]
+    },
+    {
+      "id": "story.chapter-branch",
+      "capabilities": [
+        "story"
+      ],
+      "tasks": [
+        "chapter",
+        "branch"
+      ],
+      "source": "story/core/methods/chapter-branch.md",
+      "when": "Use the technique when a specific creative/continuity problem needs it.",
+      "legacy_sources": [
+        "story/core/steps/chapter/BRANCH_IMPLEMENTATION_OVERLAY.md",
+        "story/core/steps/chapter/STEP_10_5_SYNC_REVIEW.md",
+        "story/core/steps/chapter/STEP_10_SYNC_TWIN_AND_FRAME.md",
+        "story/core/steps/chapter/STEP_11_5_HANDOFF_REVIEW.md",
+        "story/core/steps/chapter/STEP_11_OUTCOMES_AND_HANDOFF.md",
+        "story/core/steps/chapter/STEP_12_5_OPEN_STORY_BRANCH_ACCEPTANCE.md",
+        "story/core/steps/chapter/STEP_12_OPEN_STORY_BRANCH_EXPANSION.md",
+        "story/core/steps/chapter/STEP_1_5_PREFLIGHT_REVIEW.md",
+        "story/core/steps/chapter/STEP_1_CHAPTER_PREFLIGHT.md",
+        "story/core/steps/chapter/STEP_2_5_STORY_LINE_DISCOVERY_REVIEW.md",
+        "story/core/steps/chapter/STEP_2_STORY_LINE_DISCOVERY.md",
+        "story/core/steps/chapter/STEP_3_5_CHAPTER_SPINE_REVIEW.md",
+        "story/core/steps/chapter/STEP_3_CHAPTER_SPINE.md",
+        "story/core/steps/chapter/STEP_4_5_CHAPTER_SOURCE_REVIEW.md",
+        "story/core/steps/chapter/STEP_4_SAVE_CHAPTER_SOURCE.md",
+        "story/core/steps/chapter/STEP_5_5_EVENT_GRAPH_REVIEW.md",
+        "story/core/steps/chapter/STEP_5_EVENT_GRAPH.md",
+        "story/core/steps/chapter/STEP_6_5_RUNTIME_DRAFT_REVIEW.md",
+        "story/core/steps/chapter/STEP_6_75_STAGING_REVIEW.md",
+        "story/core/steps/chapter/STEP_6_7_STAGING_REALIZATION.md",
+        "story/core/steps/chapter/STEP_6_RUNTIME_DRAFT.md",
+        "story/core/steps/chapter/STEP_7_5_LANDING_INTEGRITY_REVIEW.md",
+        "story/core/steps/chapter/STEP_7_RUNTIME_LANDING.md",
+        "story/core/steps/chapter/STEP_8_5_QUOTED_DIALOGUE_REVISION_REVIEW.md",
+        "story/core/steps/chapter/STEP_8_QUOTED_DIALOGUE_REVISION.md",
+        "story/core/steps/chapter/STEP_9_5_QA_ACCEPTANCE.md",
+        "story/core/steps/chapter/STEP_9_STORY_AND_PROSE_QA.md"
+      ]
+    },
+    {
+      "id": "story.craft",
+      "capabilities": [
+        "story"
+      ],
+      "tasks": [
+        "craft"
+      ],
+      "source": "story/core/craft/README.md",
+      "when": "Use this bounded existing specialist technique; v3 process and USER boundaries govern.",
+      "legacy_sources": []
+    },
+    {
+      "id": "story.beat-sheet",
+      "capabilities": [
+        "story"
+      ],
+      "tasks": [
+        "beat-sheet"
+      ],
+      "source": "story/modules/beat-sheet-dialogue/README.md",
+      "when": "Use this bounded existing specialist technique; v3 process and USER boundaries govern.",
+      "legacy_sources": []
+    },
+    {
+      "id": "story.delivery",
+      "capabilities": [
+        "story"
+      ],
+      "tasks": [
+        "delivery"
+      ],
+      "source": "story/modules/delivery-planner/README.md",
+      "when": "Use this bounded existing specialist technique; v3 process and USER boundaries govern.",
+      "legacy_sources": []
+    },
+    {
+      "id": "story.twin",
+      "capabilities": [
+        "story"
+      ],
+      "tasks": [
+        "twin"
+      ],
+      "source": "story/modules/twin-db/README.md",
+      "when": "Use this bounded existing specialist technique; v3 process and USER boundaries govern.",
+      "legacy_sources": []
+    },
+    {
+      "id": "story.rules",
+      "capabilities": [
+        "story"
+      ],
+      "tasks": [
+        "rules"
+      ],
+      "source": "story/modules/world-rules-editor/README.md",
+      "when": "Use this bounded existing specialist technique; v3 process and USER boundaries govern.",
+      "legacy_sources": []
+    },
+    {
+      "id": "asset.production",
+      "capabilities": [
+        "asset"
+      ],
+      "tasks": [
+        "*"
+      ],
+      "source": "asset/docs/PROP_ASSET_WORKFLOW.md",
+      "when": "Approved asset needs the existing prop-generation/cleanup/geometry pipeline.",
+      "legacy_sources": []
+    },
+    {
+      "id": "sound.production",
+      "capabilities": [
+        "sound"
+      ],
+      "tasks": [
+        "*"
+      ],
+      "source": "sound/docs/AI_CALLER_LANDING.md",
+      "when": "Approved cue needs existing generation, trim or normalization.",
+      "legacy_sources": []
+    }
+  ],
+  "obligation_map": [
+    {
+      "source": "story/core/steps/world/README.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_0_5_WORLD_CONCEPT_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_0_WORLD_CONCEPT_FRAMING.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_1_5_WORLD_RULES_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_1_WORLD_RULES_AND_CONSTRAINTS.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_2_5_GEOGRAPHY_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_2_GEOGRAPHY_AND_LOCATIONS.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_3_5_INSTITUTIONS_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_3_INSTITUTIONS_AND_DAILY_ORDER.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_4_5_OBJECTS_AND_MOVEMENT_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_4_OBJECTS_AND_MOVEMENT.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_5_5_DIGITAL_TWIN_PACKAGING_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_5_DIGITAL_TWIN_PACKAGING.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_6_5_WORLD_BASELINE_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/world/STEP_6_WORLD_CONSISTENCY_QA.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/README.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_0_5_CHARACTER_CONCEPT_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_0_CHARACTER_CONCEPT_FRAMING.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_1_5_WORLD_POSITION_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_1_WORLD_POSITION_AND_DAILY_ROLE.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_2_5_BEHAVIOR_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_2_BEHAVIOR_AND_SPEAKING_PATTERN.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_3_5_KNOWLEDGE_AND_RELATIONS_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_3_KNOWLEDGE_AND_RELATIONS.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_4_5_CHARACTER_PACKAGING_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_4_CHARACTER_PACKAGING.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_5_5_CHARACTER_BASELINE_REVIEW.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/character/STEP_5_CHARACTER_CONSISTENCY_QA.md",
+      "method": "story.world-character",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/README.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_0_5_CAST_SCOPE_REVIEW.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_0_CAST_SCOPE_FRAMING.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_1_5_CAST_AUDIT_REVIEW.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_1_AUDIT_CURRENT_CAST.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_2_5_MISSING_AND_OVERLAP_REVIEW.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_2_IDENTIFY_MISSING_AND_OVERLAP.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_3_5_REBALANCE_REVIEW.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_3_RELATIONSHIP_AND_PRESSURE_REBALANCE.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_4_5_CAST_ACTION_REQUEST_REVIEW.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_4_GENERATE_CAST_ACTION_REQUESTS.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_5_5_CAST_BASELINE_REVIEW.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/cast/STEP_5_CAST_SUFFICIENCY_QA.md",
+      "method": "story.cast-pressure",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/BRANCH_IMPLEMENTATION_OVERLAY.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_10_5_SYNC_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_10_SYNC_TWIN_AND_FRAME.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_11_5_HANDOFF_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_11_OUTCOMES_AND_HANDOFF.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_12_5_OPEN_STORY_BRANCH_ACCEPTANCE.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_12_OPEN_STORY_BRANCH_EXPANSION.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_1_5_PREFLIGHT_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_1_CHAPTER_PREFLIGHT.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_2_5_STORY_LINE_DISCOVERY_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_2_STORY_LINE_DISCOVERY.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_3_5_CHAPTER_SPINE_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_3_CHAPTER_SPINE.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_4_5_CHAPTER_SOURCE_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_4_SAVE_CHAPTER_SOURCE.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_5_5_EVENT_GRAPH_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_5_EVENT_GRAPH.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_6_5_RUNTIME_DRAFT_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_6_75_STAGING_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_6_7_STAGING_REALIZATION.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_6_RUNTIME_DRAFT.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_7_5_LANDING_INTEGRITY_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_7_RUNTIME_LANDING.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_8_5_QUOTED_DIALOGUE_REVISION_REVIEW.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_8_QUOTED_DIALOGUE_REVISION.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_9_5_QA_ACCEPTANCE.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    },
+    {
+      "source": "story/core/steps/chapter/STEP_9_STORY_AND_PROSE_QA.md",
+      "method": "story.chapter-branch",
+      "quality_owner": "story/docs/WORKFLOW_GPT6.md",
+      "retained": "All applicable semantic criteria; see world/character/cast/chapter/branch/delivery sections.",
+      "replaced": "Fixed worker, output-file choreography, paragraph quotas and per-step PASS files.",
+      "consumer": "Full indexed character/twin/prose artifacts via factory_design.v3; story/v2.py exact-output acceptance.",
+      "tests": [
+        "factory_core.tests.test_gpt6",
+        "factory_core.tests.test_gpt6_story"
+      ]
+    }
+  ]
+}

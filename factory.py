@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Factory v2 shared entry; specialist CLIs remain independently callable."""
+"""Versioned Factory shared entry (v2 / explicit GPT-6 v3); specialist CLIs remain independently callable."""
 from __future__ import annotations
 
 import argparse
@@ -17,7 +17,7 @@ def parser():
     sub = p.add_subparsers(dest="command", required=True)
     for name in ("inspect", "context", "checkpoint", "migrate"):
         cmd = sub.add_parser(name)
-        cmd.add_argument("--game-repo", default=".")
+        cmd.add_argument("--game-repo", "--project-root", dest="game_repo", default=".")
         if name in ("inspect", "context"):
             cmd.add_argument("--task-id")
         if name == "inspect":
@@ -27,6 +27,7 @@ def parser():
             cmd.add_argument("--task", required=True)
             cmd.add_argument("--role", default="author", choices=["author", "human", "intent_experience", "completeness_project", "blind_observer"])
             cmd.add_argument("--design", help="complete design package path inside game")
+            cmd.add_argument("--method", action="append", default=[], help="expand an optional method id (GPT-6 workflow only)")
         if name == "checkpoint":
             cmd.add_argument("--input", required=True, help="checkpoint request JSON")
         if name == "migrate":
@@ -36,6 +37,7 @@ def parser():
             cmd.add_argument("--project-id", required=True)
             cmd.add_argument("--expected", help="exact preview source digest; required for --apply")
             cmd.add_argument("--authority", action="append", default=[], help="additional adopted authority path, repeatable")
+            cmd.add_argument("--workflow", choices=("v2", "gpt6"), default="v2", help="explicit contract selection; never inferred from model name")
     cmd = sub.add_parser("benchmark")
     cmd.add_argument("--suite", default=str(ROOT / "factory_core/benchmarks/suite.json"))
     cmd.add_argument("--output-root", required=True)
@@ -68,7 +70,7 @@ def main(argv=None):
             elif args.command == "context":
                 from factory_core.context import context
                 result = context(roots, args.capability, args.task, args.role, args.task_id,
-                                 reference(game, args.design) if args.design else None)
+                                 reference(game, args.design) if args.design else None, methods=args.method)
             elif args.command == "checkpoint":
                 from factory_core.state import checkpoint
                 result = checkpoint(roots, read_json(Path(args.input)))
@@ -76,6 +78,8 @@ def main(argv=None):
                 from factory_core.migration import preview, apply
                 if args.apply and not args.expected:
                     raise FactoryError("PREVIEW_REQUIRED", "--apply requires the reviewed --expected source digest")
+                if args.workflow == "gpt6":
+                    from factory_core.migration_gpt6 import preview, apply
                 result = apply(game, ROOT, args.project_id, args.expected, args.authority) if args.apply else preview(game, ROOT, args.project_id, args.authority)
         print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
         blocked = bool(result.get("blockers")) or result.get("ok") is False or result.get("status", "").endswith(("REQUIRED", "INVALID", "INCOMPLETE", "NOT_MET", "NOT_RUN"))

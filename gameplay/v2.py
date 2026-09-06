@@ -32,7 +32,13 @@ def validate_design(roots: dict, d: dict):
     provenance = system_payload.get("factory_revision", "")
     errors = []
     from gameplay.design_gate import _extract_material_spec
-    material, author = _extract_material_spec(resolve_ref(roots, domain["objective"]).read_text(), errors)
+    if d['schema_version'] == 'factory_design.v3':
+        # Native content is projected directly. No mandatory Markdown handoff
+        # grammar or second authored Objective/Card is needed to extract facts.
+        from gameplay.native import material_spec
+        material, author = material_spec(roots, d, errors)
+    else:
+        material, author = _extract_material_spec(resolve_ref(roots, domain["objective"]).read_text(), errors)
     if author != d["author_context_id"]:
         errors.append("objective and complete design must identify the same continuing author")
     coverage = domain["material_coverage"]
@@ -44,7 +50,11 @@ def validate_design(roots: dict, d: dict):
             if not isinstance(ids, list) or not ids or any(i not in decisions for i in ids):
                 errors.append(f"unknown/missing Card projection for {name}")
                 continue
-            if not any(material[name] in decisions[i]["excerpt"] or material[name] in decisions[i]["consequence"] for i in ids):
+            if d['schema_version'] == 'factory_design.v3':
+                section = next(s for s in d['decision_sections'] if s['id'] == name)
+                if set(ids) != set(section['decision_ids']):
+                    errors.append(f'human section coverage mismatch: {name}')
+            elif not any(material[name] in decisions[i]["excerpt"] or material[name] in decisions[i]["consequence"] for i in ids):
                 errors.append(f"human view omits material statement {name}")
     system = _validate_system(repo, system_path, factory_revision=provenance, errors=errors)
     if system.get("project_id") != pid:

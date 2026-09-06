@@ -1,233 +1,190 @@
-# Factory GPT-6 適性調整計畫
+# GPT-6 Astra adaptation — approved implementation plan
 
-日期：2026-09-06。狀態：**規劃草案，待 USER 討論；尚未開始實作或模型試驗。**
+USER approved implementation on 2026-09-06. This replaces the earlier A/B/C
+proposal. Git baseline: bad78613b57a6a6a7fc09f76c6a4b9d69d61f9b6; stable checkout
+remains main. Work only in gpt-6-adaptation; no global skill reinstall, other
+consumer relink, backup branch/file, or copied game repository.
 
-## 1. 已同步的目標
+## Intent and order
 
-這次不是以刪文件、減少 agent 或「更薄」為先驗答案。
+Factory encodes human creative experience, not a requirement to reproduce the
+thinking choreography needed by older models. Keep the experience and quality
+floor; let the continuing primary author jointly design and produce, using
+methods when useful. Directly adapt, run real work, and revise from USER feedback.
+No A/B/C experiments, token-comparison project, or token-reduction completion gate.
+Existing benchmark CLI and historical failures remain intact, not relabeled.
 
-舊 Factory 把人的經驗編成可檢驗的創作步驟，補足舊模型無法穩定產出
-「合格且合適」作品的能力。現在要辨認：哪些思考輔助已可由 GPT-6 Astra
-直接承擔，哪些仍有助益，哪些本來就是外部記憶、執行或獨立驗證，不能
-因模型變強而取消。保留經驗與品質下限，依實驗調整方法。
+1. Shared core and Idea/Gameplay/Studio; then existing Asset/Sound integration.
+2. Opt-in Empire & Union and actual production/runtime verification.
+3. Independent Story and virtual-world NPC capability; full regression.
 
-- Idea 是逐步建立人與模型的產品理解，不只是缺少點子時生成提案。
-  使用者已知道想做什麼，也可能需要從熟悉作品的參照開始對齊。
-- Gameplay 把產品方向變成完整玩法、製作與驗證；Asset/Sound 各自負責
-  可用且合適的視覺／聲音產物。Factory 要能支撐單人＋AI 完成整款遊戲。
-- Story 是可獨立於遊戲的創作系統，底層尺度是 virtual world 裡全部 NPC
-  的日常故事；不能降格為遊戲事件台詞生成器或只測一位角色的文筆。
-- Banner 的團隊邊界、責任與可追蹤性仍有效；它是相容／協作案例，
-  不再作為本次適性調整的主要產品目標。
-- Empire & Union 是主要實測專案，phase one 以《自護之系譜》為參照。
-  利用既有作品建立人與 AI 都能參與的驗收，而非只靠 AI 自評新創作。
+## Implementation contract
 
-## 2. Git 與使用者隔離（已完成）
+- Explicit factory_project.v3 / workflow_version 3 selects Astra behavior.
+  v1/v2 readers and specialist CLI arguments remain supported; no inferred upgrade.
+- Add migrate --workflow gpt6 --check/--apply --expected; omitted workflow keeps
+  existing behavior. Add --project-root as an alias of --game-repo and repeatable
+  context --method <id>. No model API runner, daemon, or generic profile platform.
+- Preserve state partitions, append-only/CAS checkpoints, exact source hashes,
+  independent review identity, raw USER rulings and specialist acceptance.
+- Use a versioned complete-design package; prose/diagrams/structured data can be
+  multiple necessary artifacts, but each material fact is authored once. Human
+  decisions and production views reference/project that package, not new authors.
+- Catalog requirements separately from optional methods. Each moved obligation
+  has source, new owner/location and tests. Do not silently remove requirements
+  or leave consumers requiring supposedly optional step outputs.
+- Context returns current task, complete applicable authority, work, questions
+  and legal action; deduplicate sources, index methods, expand selected methods.
+  Unclassified authority remains full text. Reviewers get all applicable sources,
+  not an author-selected subset. Blind observers never receive generic context.
+- Bind validity to related code/schema/rules, authority, inputs and actually
+  selected methods. Unused optional-method edits do not invalidate work; unknown
+  dependencies block rather than permit a fabricated refresh.
+- Migration previews the whole routing/pointer/metadata write set, checks source
+  fingerprints before publication, activates last, recovers/repeats safely and
+  rejects concurrent edits. Historical rulings are not imported as new approval.
+- Project routing resolves the selected checkout before its skill/workflow;
+  ordinary relink does not change workflow. Stable installed skills stay on main.
 
-- 調整前程式基準：`bad78613b57a6a6a7fc09f76c6a4b9d69d61f9b6`。
-- Git 安排提交：`efb69dbc4dbd2d0cba4e47c89a4e65e8ac373d1d`，僅更新
-  根 AGENTS 分支／消費者隔離政策；`main` 與 `gpt-6-adaptation` 均已推送。
-- 原有共享 checkout 留在 `main`；GPT-6 分支使用獨立 Git development
-  worktree。既有 skills symlinks、其他專案 pointers 與 providers 不切換。
-- 所有適性調整、此計畫及後續實驗方法只進 `gpt-6-adaptation`。
-  合併 `main` 必須另經 USER 授權；不強制其他伙伴升級模型或流程。
-- 不建立備份分支／檔案，不複製遊戲 repo。遊戲產物仍只放目標專案。
+## Capability behavior
 
-## 3. 現況與證據限制
+Idea progressively establishes shared product understanding through references,
+questions and proposals; save settled decisions, reasons/differences and unknowns.
+Exploration can remain open/no-fit; commissioning remains USER-owned.
 
-目前 v2 已有共同 CLI、依賴指紋、檢查點與兩份完整設計審查。
-但「68 個 Story 步驟改稱按需方法」不等於其分拆產物、下游讀取前提與
-固定格式已不再約束作者。需檢查實際呼叫／資料依賴，不能只改入口文字。
+Gameplay/Studio jointly design causal loops, actual player work, responses,
+carry-forward, alternatives, costs, recovery, two-lap difference and concrete
+scene/time composition. Multiple system transitions can correspond to one actual
+work beat; automatic feedback is not fake player work. Required scene maps and
+material consequences must appear in the checked human projection. Execution
+plans add details only. Existing authorized mechanical fixes reuse authority;
+changed gameplay/meaning/scope reopens the design boundary.
 
-已讀到的具體候選：
+Asset/Sound keep generation, cleanup, geometry/alpha validation, trim and
+normalization providers. The author supplies one context-aware brief and reads
+compact results/errors. Mocks certify routing only, not visual/audio quality.
 
-| 目前結構 | 待驗證的調整，不是既成結論 |
-|---|---|
-| Story world-role／voice／knowledge 分步產物與固定段落長度 | 同一作者聯合創作角色，再輸出必要的世界／知識狀態；品質要求不丟失 |
-| Gameplay system phase、playable beat、interaction sequence | 分清系統階段與實際玩家工作，允許正確的多對一映射，不製造湊數互動 |
-| Objective／完整正文／Card excerpts／圖與場景表 | 保存一份內容權威，機械投影其他視圖；不要求重新創作同一內容 |
-| context 載入多份完整流程及專案材料 | 區分有效要求、目前成果、方法與歷史；去重並按需載入方法，但不截斷有效限制 |
-| 首次 review FAIL 後結束回合 | 主作者在授權內持續修訂；保存失敗與新版本，不靠 USER 逐次說「繼續」 |
-| Story 共用入口以 game root／runtime 為預設 | 驗證純 Story 專案能完成創作與世界狀態更新，不要求 Godot、產品採用或 playable baseline |
+Story is independent of games. World/character/cast/chapter/branch/craft/beat-sheet/
+delivery/twin/rules remain available. Replace fixed step workers, file handoffs
+and paragraph lengths with full jointly authored outputs and optional methods.
+Persistent world events, knowledge provenance, relations, time and branch memory
+support relevant-NPC updates rather than rewriting the whole population.
+Pure Story needs neither Godot, a commissioned game nor a playable baseline;
+engine staging/landing is a separate applicable adapter. Preserve full prose,
+voice, emotional pacing, world sovereignty, terms, all shipped locales, bounded
+clean-room fluency, canon backcheck and exact-output semantic QA. The kinship
+USER ruling stays a semantic blocker, not a universal word blacklist.
 
-2026-09-05 試驗有 16 試次，7 完成、9 未完成，並有執行工具和計量缺陷。
-其結果不能證明原生能力已取代任何特定步驟，也不能追認 token 節省。
-E1 的互動、延誤知識和共享時鐘缺陷，以及「親兄弟」語意裁決，都作為
-必須保留的失敗案例，不因適性調整改成 PASS。
+## Review, authority and stopping
 
-來源：[v2 工作流](WORKFLOW.md)、[既有驗證](VALIDATION.md)、
-[試驗結果](../benchmarks/RESULTS_20260905.md)、
-[Story 方法與邊界](../../story/docs/WORKFLOW_V2.md)、
-[Gameplay 邊界](../../gameplay/docs/WORKFLOW_V2.md)。
+Two fresh independent reviewers examine the same complete-design version without
+first-pass peer conclusions: intent/experience and completeness/project. The
+primary author repairs FAILs within authority and reruns reviews on the exact new
+version. No generic review for each reply, no restart merely for mechanical
+implementation failure. Continue until the boundary passes, a new USER decision
+is required, inputs/tools are unavailable, or no useful new repair can be made;
+report that precise checkpoint, never claim completion to escape a blocker.
 
-## 4. 工作包 A：把人的經驗與舊工序分開
+USER owns product adoption, material design approval and actual gameplay
+acceptance. Blind runtime observation and informed comparison remain isolated.
+Tests/screenshots/AI PASS do not constitute gameplay acceptance. Accepted baseline
+promotion still requires new-play acceptance, applicable predecessor regression
+and no blockers; absent predecessor is recorded, not fabricated.
 
-先盤點既有 rule_map、各能力規則、步驟與實際 consumers，不先新建另一套
-龐大框架。每個待調整單位記錄：原始來源、保護的品質、典型失敗、適用
-條件、目前產物／consumer、替代方式與能否撤除的驗證案例。
+## Empire pilot and exclusions
 
-分類：
+Continue /Users/hunglingki/git_projects/Godot/Empire_and_Union in place. Preserve
+its existing dirty project.godot edit. Banner is read-only compatibility/known-
+failure context: do not relink or edit its E1, runtime, untracked files or baseline.
 
-1. **經驗／品質要求**：例如角色不知道未獲得的事、戰略準備改變戰術選項。
-   保留要求與理由；可變更表達與載入方式。
-2. **思考輔助**：先做哪些表、固定問哪些問題、必須拆幾個 worker。
-   比較原生創作與按需啟用，撤掉前須有證據。
-3. **持久狀態與工具約束**：世界記憶、所有權、版本、併發、schema／引用。
-   優先工具化，不能改成「模型記得就好」。
-4. **獨立驗證／人類裁決**：精確版本 review、盲觀察、產品方向與接受。
-   不拿掉以改善表面通過率。
-5. **provider 與實際執行**：素材生成／清理／透明度／幾何、音訊修剪／
-   正規化、Godot 操作與存讀回歸；保留既有管線。
+USER ruling in the planning question: "解除切片前置限制". This expressly removes
+coastal-slice human acceptance as the prerequisite to full-campaign production.
+Record this new authority and supersede conflicting current brakes explicitly;
+do not rewrite historical documents or mark the old slice accepted.
 
-交付：可追溯的「來源 → 要求 → 新位置／方法 → 測試」對照與第一批
-小型試驗清單。驗收：沒有無聲刪除的義務，沒有失去讀取者的必要產物。
+Keep Empire's adopted product and approved campaign intent. Phase one references
+PS1 Zeon no Keifu mechanics/process, with the existing original expression/data/
+balance boundaries. Start from public manual/guides, record located source,
+behavior, Empire mapping, authorized differences, unknowns and test. Never invent
+reference evidence or download game images as a default.
 
-## 5. 工作包 B：驗證 Astra 原生能力與按需方法
+Audit the existing P01-P10 design, preserve valid USER decisions, review necessary
+changed/new design and produce along its dependencies: state/catalogs; map/turn;
+economy/research; personnel/intel/diplomacy; operations/supply; hex combat; complete
+content; AI/endgame; UI/saves; integration. Run real tests/interaction each batch;
+batching does not restore the revoked coastal acceptance brake. A two-lap slice
+is not the complete campaign. Reference uncertainties requiring material product
+choices return to USER; already settled product questions do not.
 
-### 5.1 比較方式
+## Verification and honest completion
 
-使用同一已修復、先自測通過的執行底座，先比較三種思考安排：
+Run entry/core/Studio/Gameplay/Idea/Asset suites and relevant Story/Sound checks.
+Add v3/v2 isolation, interrupted/repeated migration, concurrent write, immutable
+history, checkpoint restart, complete context, blind isolation, dependency and
+unauthorized-production regressions. Gameplay covers fake work, shared clock,
+delay knowledge, real scene work and omitted decision surface. Story tests multi-
+NPC/multi-day propagation, branch isolation, restart, voice/meaning and no-engine
+operation; a small fixture is not proof of full-world scale. Provider mocks do
+not replace actual media review. Empire runs Godot state, UI/interaction, cross-
+turn, save/load, filtered-AI and regression checks.
 
-- A：既有外部思考拆解與中間產物。
-- B：相同來源、授權、完整交付和品質標準，不指定思考拆解。
-- C：B，加上主作者在遇到具體問題時選用相關方法。
+Factory engineering, Empire production and accepted gameplay are separate status
+claims. Completion requires usable new workflows with all capabilities, passing
+checks, real Empire production/run, independent Story cases and resolved or
+explicitly escalated blockers. Preserve evidence and report unfinished work;
+never relabel old benchmark attempts as new validation.
 
-這是能力消融試驗，不把 A 冒充舊版整條流程的原始用量。
-固定 Astra、reasoning、輸入、工具權限與成品範圍；先沿用 high 作起點。
-若要變更 reasoning，另立比較，不與方法效果混在一起。
-同一能力比較至少兩個固定案例／變體，並包含植入缺陷和未用於調整的案例。
-先跑小案例驗證 author → review → rework → production/QA 接續，才擴大。
+## Design review repair: concrete consumer/state contracts
 
-各組保留同一品質邊界。需要獨立角色時使用真正分離的 context；
-每份新版完整設計的兩位 reviewer 審同一版本，首次不互讀結論。
-記錄方法啟用的問題與成果引用，不要求保存私有逐步思考內容。
+The first independent intent review passed; completeness requested the bridges
+below. These are implementation detail within USER-approved intent, not new
+product decisions or a reinstated test-comparison gate.
 
-### 5.2 覆蓋範圍
+- Schema/dispatch: factory_project.v3 and factory_design.v3 are new; shared
+  factory_checkpoint.v2, factory_review.v2 and factory_ruling.v2 stay unchanged.
+  gameplay/v2.py dispatches native material sections to gameplay/native.py but
+  retains graph/surface/project checks. gameplay/plan.py consumes that same
+  checkpoint, enforces approved paths and derives compatibility row numbers from
+  sealed playable beats (no extra numbered Markdown Objective). studio/v2.py and
+  baseline.py retain factory_gameplay_acceptance_input.v2, exact-build human
+  verdict and baseline admission checks. Positive native full admission and real
+  Godot tests plus unauthorized path/missing human cases exercise the whole chain.
+- Migration matrix: unversioned/v1 -> v3; v2 -> v3; exact v3 -> no-op; implicit
+  downgrade and authority removal -> rejection. The v3 transaction hashes the
+  complete before set and desired after outputs, blocks use while prepared,
+  publishes routing/pointer/receipt before PROJECT activation and recovers only
+  matching partial outputs. Routing receipt predecessor proofs contain hashes,
+  not backup text. Old checkpoint task ids are historical-only; a new task cites
+  those exact sources and gets current validation, not imported approval. Existing
+  product/design USER decisions remain source authority, not a new review verdict.
+- Method ownership: factory_core/knowledge.json binds every old Story step to its
+  retained semantic owner in story/docs/WORKFLOW_GPT6.md, optional technique,
+  full-artifact consumer and regression suite. Existing rule_map ids retain their
+  reviewer owners. methods ids are frozen in the v3 design; their exact files
+  join the shared reviewer fingerprint. Changing ids or content reopens design.
+  Unused method content is excluded; catalog membership is a conservative resolver
+  dependency. Removed/unknown selections fail closed. v2 dependencies stay v2.
+- Standalone Story: PROJECT_PROFILE fields are PROJECT_ID, WORLD_NAME, STORY_ROOT,
+  PRIMARY_LOCALE, SHIPPED_LOCALES, MEDIUM=standalone|game, plus explicit sovereignty
+  files. story design binds spoken_output_paths, runtime_output_paths and exact
+  scope_evidence. Standalone with no runtime works despite an inactive colocated
+  product. story_output_acceptance.v3 / story_technical_evidence.v3 permit typed
+  NOT_APPLICABLE only for staging fidelity/routing with profile+scope evidence;
+  no executed command is claimed. All other semantic/locale/knowledge checks and
+  applicable v2 clean-room/backcheck records remain. Tests run through COMPLETE
+  with synthetic, explicitly non-human fixture rulings—not real creative approval.
+- NPC state: existing twin entities/facts remain canonical. story/world_state.py
+  stores append-only accepted event envelopes beside the twin, not a second
+  mutable canon or scheduler. story_event_delta.v1 names event_id, branch, monotonic
+  tick, Git-pinned canonical entity source, new event facts, ordered observed/told
+  acquisitions, relation changes and optional exact ancestor event base. Observation
+  references this event's fact; communication requires the speaker's already
+  acquired branch-local knowledge. Only branch genesis may inherit an exact
+  ancestor endpoint; later parent events do not leak. Publication consumes an
+  exact current COMPLETE Story output under the project lock, with predecessor
+  CAS and event-id idempotency. Replay/query are derived; npc query omits unknown
+  world truth. Candidate preview is never canon. Existing twin CRUD is preserved.
 
-| 能力 | 原生／按需試驗 | 不得失去的底線 |
-|---|---|---|
-| Idea | 使用者已知方向但模型理解不足；以參照／比較／提問逐步對齊；另測 no-fit | 不強迫收斂，不把 exploration 當批准，不替 USER 換產品目標 |
-| Gameplay | 一次聯合設計循環與具體操作；分支／延誤／返回；已授權修復 | 真正玩家工作、兩輪差異、狀態／時間一致、實際可操作、完整產品目標 |
-| Story | 角色完整創作、章節／分支、跨 NPC 的日常事件與續寫 | 人物聲音、語意、世界規則、知識來源、關係與時間、分支隔離 |
-| Asset | 整合使用場景、風格與技術條件，減少重複 prompt 交接 | 實際視覺／語意品質、尺寸、透明度、幾何及 provider 相容 |
-| Sound | 整合 cue 目的與聲音製作要求 | 實際聆聽／事件對應、長度、剪裁與正規化；mock 不冒充聽覺驗收 |
-
-Story 額外有無引擎 fixture：共享世界的一個事件只改相關 NPC 的經歷，
-消息依接觸／傳播更新知識；中斷後續寫仍一致，分支不互相洩漏。
-從有因果連結的小群 NPC 測到較大群與較長時間；擴展尺度依首輪成本及
-錯誤分布決定，不聲稱小群通過已驗證 virtual world 全部人口。
-
-### 5.3 去留規則
-
-- B 在相同下限穩定通過：該外部拆解可移除，要求／評估仍保留。
-- B 不穩定、C 能穩定修復：方法改為具體條件觸發，而非每次必走。
-- 只有 A 能維持下限：先保留輔助，查明原因，不因模型品牌硬刪。
-- 三組都失敗：查任務定義、來源、工具及能力缺口；不得降低標準求 PASS。
-
-衡量作者、reviewer、失敗、返工、工具呼叫、總 tokens、延遲、USER
-介入需求與作品品質。cached input 另列，reasoning 不重複加總。
-缺 usage／不完整成品不列為節省。最終再比較 stable v2 與適性版的端到端
-流程，兩輪同等任務的總 tokens 都下降才滿足既定成本驗收；逐能力披露
-退步，不以總平均掩蓋。沒有預設節省百分比。
-
-## 6. 工作包 C：依結果調整 Factory，不先重造核心
-
-保留 `factory.py inspect/context/checkpoint/migrate/benchmark` 與 specialist
-CLI 相容入口；不新增獨立模型 API 執行器或長駐排程器。
-
-預期改動範圍（須由 B 的結果決定）：
-
-- `factory_core/catalog.py`、`context.py`、`rule_map.json`：有效要求與
-  方法分層、去重、來源覆蓋、未知依賴明示；按需不等於刪掉限制。
-- 各能力 workflow／skills：以完整成果與可用方法為主，移除已證明多餘
-  的固定思考拆解；主作者依缺陷持續修訂。
-- `gameplay/v2.py`、`studio/player_surface.py` 與投影邏輯：修正階段／
-  玩家工作表示的混淆，不以修改 validator 放過虛假互動。
-- Story profile／入口：明確分開媒介無關的故事創作與遊戲 landing；
-  保留既有 game adapters 和世界記憶／twin 功能。
-- `setup.py` 與 routing：實驗模式明確 opt-in，來源工作區與方法版本綁定
-  checkpoint／review；不能只因偵測到模型名稱就默默改專案契約。
-
-新增實驗 profile 的精確欄位／版本，由第一個可工作的 pilot 決定。
-必須和既有 v1/v2 歷史讀取分開；不把舊批准或舊 FAIL 重標成新模式成果。
-只為表示真實狀態／機械驗證新增結構，不再為每個思考動作新增一份文件。
-
-## 7. 工作包 D：Empire & Union phase-one 實測
-
-### 7.1 先把現成標準變成可核對的參照
-
-現有 Idea seed 指定 PS1《自護之系譜》、機制／流程參照與原創表現界線。
-本次 USER 再確認 phase one 是 copy 該作。先整理已定要求，不重新問已回答
-的产品方向，也不假設舊 40 區域、原創名冊及全部數值等於原作。
-
-建立專案內參照對照：來源版本與定位、原作可觀察行為、Empire 對應、
-必須相同的機制／關係、已有意識的差異、尚無來源的未知項、驗證方式。
-不以模型記憶或互相引用的 AI 文件冒充原版證據。
-
-既有來源線索：
-- [PS1 說明書頁](https://psinstructionmanual.com/zeonnokeifu/)：本次已確認
-  頁面可存取，但尚未逐頁檢閱說明書圖像，不能宣稱已提取全部規則。
-- repo seed 另列攻略／評論連結，只作查找線索，須核對版本與原作觀察。
-- 可操作的原版環境、說明書完整性、錄影與代表性存檔是否可用，待確認。
-  不下載遊戲映像或修改使用者原版環境作為規劃的默認動作。
-
-### 7.2 分層驗收，而非只列功能名稱
-
-1. **規則／因果**：用已核對的原作案例，比較前置狀態、合法命令、成本、
-   結算時機、可見結果與下一個決定；差異必須有已記錄的依據。
-2. **實際互動**：兩端的操作與畫面／聲音可核對；列表裡「有生產」不等於
-   生產在戰役中真正成立。AI 可參與操作、比對與重播。
-3. **連續戰役**：不止單場戰鬥或兩圈技術 demo；逐步覆蓋多區域、跨回合、
-   人事與研發／生產／調兵對戰鬥的影響、損失回寫及完整結局路徑。
-4. **人類體驗**：USER 確認對參照的理解與預期節奏；原作讓標準更具體，
-   但文件符合、測試通過或 AI 比較不能自動代替 USER 接受。
-
-上述為待建立的測試分類，不是本計畫已核實的原作規則細節。
-原版與 Empire 的不同呈現不要求像素相同；允許差異以既有權威和 USER
-必要裁決為準，不暗中把 copy 降成「受啟發」或擴成複製全部表現。
-
-### 7.3 接入與執行順序
-
-- 當前 Empire 是歷史格式，inspect 返回 MIGRATION_REQUIRED。先做唯讀
-  權威／來源盤點；計畫本身不授權遷移或生產。
-- 以批准後的實驗接入預覽／apply 讓 Empire 明確使用 GPT-6 工作區；
-  不改全域 skills、不重連 Banner、不覆蓋 `project.godot` 的既有修改。
-- 保存沿岸切片、完整戰役 Card／spec／plans 與未接受狀態的原始意義。
-  既有程式可作技術起點，不冒稱它已達 phase-one 目標。
-- 校對「完整設計、製作授權、基線接受」三個不同邊界，避免在尚無接受
-  基線時連合法的新設計都被阻塞；任何權威調整須明示，不能偽造 acceptance。
-- 先跑能驗證新工作方式的代表性完整單位，再在同一全戰役目標下持續
-  擴展。每階段都保留未完成版圖，不能把第一單位改名叫整體完成。
-- reference／作品產物只進 Empire；可重用方法／工具／試驗摘要進本分支。
-
-## 8. 實作與驗證關卡
-
-| 次序 | 交付與退出條件 |
-|---|---|
-| G0 Git 隔離 | 已完成；兩條遠端分支、main skills 保持原路徑、無遊戲變更 |
-| G1 經驗盤點與参照範圍 | A 的追溯對照、第一批能力假設、D 的已知／未知驗收來源；USER 討論計畫 |
-| G2 小型能力試驗 | 同一可靠底座的 A/B/C 案例，保存完整成功／失敗與用量；得出局部方法去留 |
-| G3 適性流程 pilot | 依 G2 修改最小必要核心／skills；完整作者—review—修訂—交付鏈與中斷恢復通過 |
-| G4 Empire 實測 | 明確 opt-in 後逐步對照原作；記錄 AI 可核對的結果與 USER 裁決；完整目標不縮水 |
-| G5 能力與成本驗收 | specialist 回歸、獨立 Story 世界案例、實際視覺／聲音品質、兩輪端到端成本與品質比較 |
-| G6 發布決策 | USER 決定維持實驗分支、發布 opt-in 能力或合併；不自動取代伙伴的穩定流程 |
-
-回歸必測：來源與 profile 混用拒絕、相關依賴變更失效、無關變更不失效、
-盲上下文隔離、並行寫入拒絕、未批准製作被擋、失敗後恢復、歷史不重標、
-standalone Story 無遊戲依賴、virtual-world 知識／分支隔離、providers 相容。
-依變更執行相關測試，發布前執行全部相關 specialist 測試；不為每次文件
-修字重跑整套，也不以減少必要測試降低 token。
-
-## 9. Astra 依據與當前下一步
-
-[OpenAI Astra guidance](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra)
-指出此模型對 skills／AGENTS 指令較敏感，可能在可自行推進時詢問，亦可能
-對小型修改做過廣驗證。這支持把指令盤點、持續修訂與驗證範圍納入試驗；
-不構成 Astra 已能替代任何創作方法或已能保證品質的證明。
-
-現在可進行：討論此計畫、補原作可用參照、完成逐項經驗盤點。
-尚未進行：Factory 實作調整、Empire 遷移／遊戲製作、原版操作、新模型
-benchmark、任何新 review／人類批准／玩法接受。
-
-待解的首要輸入是可操作原版與參照材料的可用性。它只限制相應的原作
-觀察驗收，不阻塞其他 Factory 方法盤點；缺資料時標未知，不編造規則。
+Implementation tests: factory_core/tests/test_gpt6.py, test_gpt6_gameplay.py,
+test_gpt6_story.py, plus all retained entry/specialist suites. No test fixture
+PASS or synthetic USER transcript is presented as Empire/Story acceptance.

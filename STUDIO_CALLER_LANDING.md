@@ -19,6 +19,14 @@ intent goes directly to its owner. A runnable interactive demo is not Studio
 delivery. Only an accepted playable baseline with new gameplay acceptance,
 predecessor regression, exact-build human verdict and no blockers is delivery.
 
+Version 3 is explicit GPT-6 opt-in, not an automatic replacement for v2. Its
+process source is [WORKFLOW_GPT6](factory_core/docs/WORKFLOW_GPT6.md).
+`migrate --workflow gpt6 --check` previews the full opt-in; apply requires the
+exact authorized digest. The original checkout/global skills stay on main.
+Use `inspect` to select the version and follow the selected checkout's skill.
+`--project-root` aliases `--game-repo`; `context --method <id>` expands an
+optional v3 technique. No comparative/token-savings gate applies to v3.
+
 The one v2 process source is [factory_core/docs/WORKFLOW.md](factory_core/docs/WORKFLOW.md).
 `context` loads relevant authority/work and method references; `checkpoint`
 validates work transitions; `migrate` previews explicit version changes (default

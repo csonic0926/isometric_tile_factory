@@ -8,6 +8,8 @@ For current operation use the `game-story-factory` skill.
 - `factory.py inspect` selects explicit project version and trustworthy work.
   Unmigrated projects return MIGRATION_REQUIRED; do not silently apply v2.
 - v2 process authority: `factory_core/docs/WORKFLOW.md`.
+- Explicit v3 process: `factory_core/docs/WORKFLOW_GPT6.md`; use the returned
+  capability rules, not a model-name guess or fixed historical worker chain.
 - Capability rules: `story/docs/WORKFLOW_V2.md`.
 - v1 compatibility/detail: `story/docs/WORKFLOW_V1.md`. Its semantic
   requirements remain available; its per-step authors/review topology does not

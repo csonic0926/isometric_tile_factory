@@ -36,8 +36,9 @@ Game AI Factories     = idea / gameplay / story / asset / sound capabilities
 5. Reusable workflow/provider/stage/schema changes land in the owning folder
    through normal commits; preserve compatibility surfaces for linked repos.
 6. Reusable Factory changes must preserve the explicit state partitions and
-   versioned compatibility rules in `factory_core/docs/WORKFLOW.md`.
-7. On an explicitly migrated v2 project, complete designs receive two fresh
+   versioned compatibility rules: v2 in `factory_core/docs/WORKFLOW.md`, explicit
+   GPT-6/v3 in `factory_core/docs/WORKFLOW_GPT6.md`.
+7. On an explicitly migrated v2 or v3 project, complete designs receive two fresh
    independent reviews (intent/experience and completeness/project), each
    different from the author and without first-pass peer conclusions. Runtime
    blind observation and informed comparison remain separately isolated.

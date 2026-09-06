@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+import os
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -15,6 +16,7 @@ from pipeline.variant_selector import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+REFERENCE_ROOT = Path(os.environ.get("FACTORY_ASSET_REFERENCE_ROOT", str(REPO_ROOT / "output" / "png")))
 
 
 def _wall_target(variant: str, *, height_units: int) -> dict:
@@ -74,10 +76,10 @@ class WallEdgeValidationTests(unittest.TestCase):
 
     def test_reference_wall_mapping_outputs_pass_edge_validation(self) -> None:
         cases = [
-            ("left", 1, REPO_ROOT / "output" / "png" / "101_wall_straight_rot90.png"),
-            ("right", 1, REPO_ROOT / "output" / "png" / "101_wall_straight_rot0.png"),
-            ("left", 2, REPO_ROOT / "output" / "png" / "102_wall_straight_2u_rot90.png"),
-            ("right", 2, REPO_ROOT / "output" / "png" / "102_wall_straight_2u_rot0.png"),
+            ("left", 1, REFERENCE_ROOT / "101_wall_straight_rot90.png"),
+            ("right", 1, REFERENCE_ROOT / "101_wall_straight_rot0.png"),
+            ("left", 2, REFERENCE_ROOT / "102_wall_straight_2u_rot90.png"),
+            ("right", 2, REFERENCE_ROOT / "102_wall_straight_2u_rot0.png"),
         ]
         for variant, height_units, reference_path in cases:
             with self.subTest(variant=variant, height_units=height_units):

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+import os
 from pathlib import Path
 
 from PIL import Image
@@ -14,6 +15,7 @@ from pipeline.variant_selector import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+REFERENCE_ROOT = Path(os.environ.get("FACTORY_ASSET_REFERENCE_ROOT", str(REPO_ROOT / "output" / "png")))
 
 
 def _floor_target(variant: str) -> dict:
@@ -42,7 +44,7 @@ def _coverage(mask: Image.Image, point: tuple[int, int], radius: int = 1) -> flo
 
 class FloorPlaneDistortTests(unittest.TestCase):
     def test_reference_full_floor_maps_to_canonical_full_geometry(self) -> None:
-        reference_path = REPO_ROOT / "output" / "png" / "001_floor_plain_rot0.png"
+        reference_path = REFERENCE_ROOT / "001_floor_plain_rot0.png"
         canonical_target = _floor_target("full")
         mapped = render_final_output(
             Image.open(reference_path).convert("RGBA"),
@@ -61,7 +63,7 @@ class FloorPlaneDistortTests(unittest.TestCase):
                 self.assertGreaterEqual(_coverage(mask, point), 0.34)
 
     def test_reference_half_floor_maps_to_canonical_half_geometry(self) -> None:
-        reference_path = REPO_ROOT / "output" / "png" / "002_floor_half_rot0.png"
+        reference_path = REFERENCE_ROOT / "002_floor_half_rot0.png"
         canonical_target = _floor_target("half")
         mapped = render_final_output(
             Image.open(reference_path).convert("RGBA"),

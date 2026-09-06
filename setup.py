@@ -355,7 +355,7 @@ def link_game_repo(factory_root, game_repo, dry_run=False):
         from pathlib import Path
         from factory_core.state import project_lock
         with project_lock(Path(game_repo)):
-            if (Path(game_repo) / "design/factory/.migration.json").exists():
+            if any((Path(game_repo) / f"design/factory/{name}").exists() for name in (".migration.json", ".migration-gpt6.json")):
                 raise SystemExit("MIGRATION_RECOVERY_REQUIRED: finish the prepared migration before relinking")
             return _link_game_repo(factory_root, game_repo, dry_run=dry_run)
     return _link_game_repo(factory_root, game_repo, dry_run=dry_run)
@@ -371,6 +371,17 @@ def _link_game_repo(factory_root, game_repo, dry_run=False):
     real_game_repo = os.path.realpath(game_repo)
     if real_game_repo == real_factory or real_game_repo.startswith(real_factory + os.sep):
         raise SystemExit("refusing to link the factory repo to itself")
+
+    # Validate BEFORE touching the pointer/ignore/routing, including a foreign
+    # stable checkout's attempted relink of a GPT-6 project.
+    version_file = os.path.join(game_repo, "design", "factory", "PROJECT.json")
+    if os.path.isfile(version_file):
+        from pathlib import Path
+        from factory_core.state import project
+        selected = project(Path(game_repo))
+        if selected['workflow_version'] == 3:
+            from factory_core.astra import check_checkout
+            check_checkout(Path(game_repo), Path(factory_root))
 
     pointer_path = os.path.join(game_repo, POINTER_REL_PATH)
     if not dry_run:
@@ -395,7 +406,9 @@ def _link_game_repo(factory_root, game_repo, dry_run=False):
         from pathlib import Path
         from factory_core.state import project
         from factory_core.migration import routed
-        project(Path(game_repo))  # fail closed on unsupported/malformed version
+        selected = project(Path(game_repo))
+        if selected['workflow_version'] == 3:
+            from factory_core.migration_gpt6 import routed
         updated = routed(existing)
     else:
         updated = upsert_marked_block(existing, render_routing_block())
@@ -431,7 +444,7 @@ def main(argv=None):
     install_parser.add_argument("--dry-run", action="store_true")
 
     link_parser = sub.add_parser("link", help="write factory routing into a game repo")
-    link_parser.add_argument("--game-repo", required=True)
+    link_parser.add_argument("--game-repo", "--project-root", dest="game_repo", required=True)
     link_parser.add_argument("--dry-run", action="store_true")
 
     args = parser.parse_args(argv)

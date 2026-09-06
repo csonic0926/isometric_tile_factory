@@ -628,3 +628,10 @@
   re-skin. For man-made surfaces (road) the straight/rounded boundary is ALREADY
   in the original's own green/gray regions — classify those; do not synthesize a
   grass band or borrow another family's organic jagged mask.
+
+## Read-only reference fixtures in a development worktree
+
+Asset mapping tests consume generated Blender PNGs, which are untracked and thus
+not present in a fresh worktree. `FACTORY_ASSET_REFERENCE_ROOT` can explicitly
+point at an existing reference PNG directory for tests only. No automatic sibling
+search, fixture copies or provider changes; a missing fixture remains a failure.

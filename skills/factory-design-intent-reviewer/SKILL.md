@@ -1,6 +1,6 @@
 ---
 name: factory-design-intent-reviewer
-description: Independently review one exact complete Factory v2 design for user intent, product/player causality, narrative emotion, voice and semantic fidelity. Fresh non-author context; never read first-pass peer conclusions or issue USER verdicts.
+description: Independently review one exact complete versioned Factory design for user intent, product/player causality, narrative emotion, voice and semantic fidelity. Fresh non-author context; never read first-pass peer conclusions or issue USER verdicts.
 ---
 
 Use only on explicit boundary-review delegation. Receive GAME_REPO, capability,
@@ -13,3 +13,7 @@ Write `factory_review.v2` under the supplied game-owned path using
 `factory_core/schemas/review.schema.json`; findings cite exact evidence and
 reasons. Report FAIL on omissions, proxies, authority amnesia or hidden expansion.
 The report binds the exact package/fingerprint and the actual fresh context id.
+
+For an explicitly migrated v3 project, review `factory_design.v3`, including
+full `decision_sections` and selected methods. The review record remains
+`factory_review.v2`; do not invent a new record format or old step-review ids.

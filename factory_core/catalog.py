@@ -44,17 +44,24 @@ def method_paths(factory: Path, capability: str, task: str) -> list[str]:
                    for p in confined(factory, prefix).rglob("*.md")})
 
 
-def factory_dependencies(factory: Path, capability: str, task: str) -> list[dict]:
+def factory_dependencies(factory: Path, capability: str, task: str, workflow_version=2, methods=()) -> list[dict]:
     """Closed conservative code/schema sets; unrelated docs/tests are not inputs.
 
     Directory membership participates: a newly added validator changes the set.
     Specialist domain rules remain references, not paraphrased replacements.
     """
-    paths = {"factory.py", "factory_core/docs/WORKFLOW.md", "factory_core/rule_map.json"}
+    native = workflow_version == 3
+    if native:
+        from .astra import WORKFLOW, CATALOG, docs, rule_source, selected_methods
+    paths = {"factory.py", WORKFLOW if native else "factory_core/docs/WORKFLOW.md", "factory_core/rule_map.json"}
+    if native:
+        paths.add(CATALOG)
     paths.update(p.relative_to(factory).as_posix() for p in (factory / "factory_core").glob("*.py"))
+    if native:
+        paths = {p for p in paths if not Path(p).name.startswith('benchmark')}
     paths.update(p.relative_to(factory).as_posix() for p in (factory / "factory_core/schemas").glob("*.json"))
     for dept in departments(capability):
-        paths.update(DOCS[dept])
+        paths.update(docs(dept) if native else DOCS[dept])
         paths.add(f"{dept}/AGENTS.md") if (factory / dept / "AGENTS.md").exists() else None
         paths.update(p.relative_to(factory).as_posix() for p in (factory / dept).glob("*.py"))
         paths.update(p.relative_to(factory).as_posix() for p in (factory / dept / "schemas").rglob("*.json"))
@@ -67,14 +74,23 @@ def factory_dependencies(factory: Path, capability: str, task: str) -> list[dict
     for rule in read_json(factory / "factory_core/rule_map.json")["rules"]:
         if "all" in rule["capabilities"] or capability in rule["capabilities"]:
             if rule["disposition"] != "on_demand_method_and_exact_output_acceptance":
-                paths.add(rule["source"])
-    paths.update(method_paths(factory, capability, task))
+                paths.add(rule_source(rule) if native else rule["source"])
+    if native:
+        paths.update(r['path'] for r in selected_methods(factory, capability, task, list(methods)))
+    else:
+        paths.update(method_paths(factory, capability, task))
     if capability == "story":
         paths.add("story/adapters/registry.md")
         # Craft obligations include glossary, native dialogue and final-language
         # quality even when the current step method doesn't mention a craft.
-        paths.update(p.relative_to(factory).as_posix() for p in (factory / "story/core/craft").glob("*.md"))
+        if not native:
+            paths.update(p.relative_to(factory).as_posix() for p in (factory / "story/core/craft").glob("*.md"))
+        else:
+            paths.add('story/core/craft/spoken-fluency.md')
         paths.update(p.relative_to(factory).as_posix() for p in (factory / "story/core/schemas").rglob("*" ) if p.is_file())
+    if not native:
+        paths -= {'factory_core/astra.py', 'factory_core/migration_gpt6.py', 'gameplay/native.py', 'story/world_state.py'}
+        paths = {p for p in paths if not p.endswith('_v3.schema.json')}
     return [reference(factory, p, "factory") for p in sorted(paths)]
 
 

@@ -35,10 +35,19 @@ def validate_fluency_packet(packet, locale):
 
 def validate_acceptance(roots, record, design, ref):
     report = read_json(resolve_ref(roots, ref))
+    native = design.get('schema_version') == 'factory_design.v3'
+    from factory_core.story_profile import resolve
+    from factory_core.state import project
+    adopted = resolve(roots['game'], project(roots['game'])['authority_paths'], roots['factory'])
+    no_runtime = native and adopted['medium'] == 'standalone' and design.get('story', {}).get('runtime_output_paths') == []
+    def valid_exclusion(finding):
+        return (no_runtime and finding.get('status') == 'NOT_APPLICABLE'
+                and adopted['profile'] in finding.get('evidence', [])
+                and design['story']['scope_evidence'] in finding.get('evidence', []))
     keys(report, {"schema_version", "design", "dependency_fingerprint", "outputs", "reviewer_context_id",
                   "fresh", "verdict", "checks", "technical_evidence", "shipped_locales", "locale_coverage",
                   "cleanroom_evidence"})
-    if (report["schema_version"] != "story_output_acceptance.v2" or report["design"] != record["design"]
+    if (report["schema_version"] != ('story_output_acceptance.v3' if native else 'story_output_acceptance.v2') or report["design"] != record["design"]
             or report["dependency_fingerprint"] != record["dependencies"]["fingerprint"]):
         fail("STALE_ACCEPTANCE", "Story acceptance must bind exact design/dependencies")
     contexts = {design["author_context_id"]}
@@ -47,9 +56,9 @@ def validate_acceptance(roots, record, design, ref):
         fail("REVIEW_NOT_INDEPENDENT", "latest-output QA must be independent of author and design reviewers")
     if report["verdict"] != "PASS" or set(report["checks"]) != CHECKS:
         fail("STORY_ACCEPTANCE_REQUIRED", "latest-output semantic QA must pass every Story obligation")
-    for check in report["checks"].values():
+    for name, check in report["checks"].items():
         keys(check, {"status", "rationale", "evidence"})
-        if check["status"] != "PASS":
+        if check["status"] != "PASS" and not (name == 'staging_landing_fidelity' and valid_exclusion(check)):
             fail("STORY_ACCEPTANCE_REQUIRED", "Story QA has an unresolved finding")
         text(check["rationale"])
         if not isinstance(check["evidence"],list) or not check["evidence"]:
@@ -58,9 +67,6 @@ def validate_acceptance(roots, record, design, ref):
     if report["outputs"] != record["artifacts"] or not report["outputs"]:
         fail("EVIDENCE_MISMATCH", "QA covers every and only the latest output checkpoint")
     for output in report["outputs"]: resolve_ref(roots,output)
-    from factory_core.story_profile import resolve
-    from factory_core.state import project
-    adopted = resolve(roots["game"], project(roots["game"])["authority_paths"], roots["factory"])
     locales = adopted["shipped_locales"]
     if report["shipped_locales"] != locales or set(texts(report["locale_coverage"])) != set(locales):
         fail("LOCALE_COVERAGE_REQUIRED", "QA must cover the adopted profile's actual shipped locales")
@@ -76,9 +82,18 @@ def validate_acceptance(roots, record, design, ref):
     for item in report["technical_evidence"]:
         technical = read_json(resolve_ref(roots,item))
         keys(technical,{"schema_version","outputs","checks"})
-        if technical["schema_version"] != "story_technical_evidence.v2" or technical["outputs"] != report["outputs"]:
+        if technical["schema_version"] != ('story_technical_evidence.v3' if native else 'story_technical_evidence.v2') or technical["outputs"] != report["outputs"]:
             fail("EVIDENCE_MISMATCH", "technical checks must bind the exact latest output set")
         for name, finding in technical["checks"].items():
+            if native and finding.get('status') == 'NOT_APPLICABLE':
+                keys(finding, {'status', 'command', 'exit_code', 'log', 'rationale', 'evidence'})
+                if name != 'routing' or not valid_exclusion(finding) or finding['command'] is not None or finding['exit_code'] is not None:
+                    fail('STORY_ACCEPTANCE_REQUIRED', 'only reviewed standalone routing may be not applicable; never claim a command ran')
+                text(finding['rationale'])
+                resolve_ref(roots, finding['log'])
+                for source in finding['evidence']: resolve_ref(roots, source)
+                covered.add(name)
+                continue
             keys(finding,{"status","command","exit_code","log"})
             text(finding["command"])
             resolve_ref(roots,finding["log"])

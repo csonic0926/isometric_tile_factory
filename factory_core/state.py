@@ -87,12 +87,17 @@ def project(game: Path) -> dict:
     path = confined(game, PROJECT_PATH)
     if not path.exists():
         fail("MIGRATION_REQUIRED", "run factory.py migrate --check, then explicit --apply")
+    if confined(game, "design/factory/.migration-gpt6.json").exists():
+        fail("MIGRATION_RECOVERY_REQUIRED", "finish the prepared GPT-6 transaction before using project state")
     data = read_json(path)
     keys(data, {"schema_version", "workflow_version", "project_id", "factory_revision", "authority_paths", "historical_inventory", "migration_source_digest"})
-    if data["schema_version"] != "factory_project.v2" or data["workflow_version"] != 2:
+    if (data["schema_version"], data["workflow_version"]) not in (("factory_project.v2", 2), ("factory_project.v3", 3)):
         fail("MIGRATION_REQUIRED", "unknown project format; no implicit migration")
     identifier(data["project_id"])
     texts(data["authority_paths"])
+    if data["workflow_version"] == 3:
+        from .astra import check_checkout
+        check_checkout(game, Path(__file__).resolve().parents[1])
     return data
 
 
@@ -119,9 +124,18 @@ def load_design(roots: dict, ref: dict) -> dict:
         fail("INVALID_DESIGN", "design must be game-owned")
     d = read_json(resolve_ref(roots, ref))
     keys(d, {"schema_version", "design_id", "capability", "task", "author_context_id", "intent",
-             "artifacts", "inputs", "decisions", "requirements", "production_scope", "acceptance"}, {"gameplay", "story"})
-    if d["schema_version"] != "factory_design.v2" or d["capability"] not in CAPABILITIES:
+             "artifacts", "inputs", "decisions", "requirements", "production_scope", "acceptance"}, {"gameplay", "story", "methods", "decision_sections"})
+    version = project(roots["game"])["workflow_version"]
+    if version == 3 and d['schema_version'] == 'factory_design.v2':
+        fail('HISTORICAL_WORKFLOW_REQUIRED', 'v2 work is historical; continue with a new v3 task/design, not rewritten approval')
+    if d["schema_version"] != f"factory_design.v{version}" or d["capability"] not in CAPABILITIES:
         fail("INVALID_DESIGN", "unsupported design type/capability")
+    if version == 2 and ("methods" in d or "decision_sections" in d):
+        fail("INVALID_DESIGN", "GPT-6 fields require an explicitly migrated v3 project")
+    if version == 3:
+        from .astra import selected_methods, validate_sections
+        selected_methods(roots["factory"], d["capability"], d["task"], d.get("methods", []))
+        validate_sections(roots, d)
     identifier(d["design_id"])
     text(d["task"])
     text(d["author_context_id"])
@@ -174,10 +188,20 @@ def load_design(roots: dict, ref: dict) -> dict:
         fail("INVALID_DESIGN", "exact-output acceptance obligations required")
     if "story" in d:
         if d["capability"] != "story": fail("INVALID_DESIGN", "Story applicability belongs only to Story")
-        keys(d["story"], {"spoken_output_paths", "scope_evidence"})
+        keys(d["story"], {"spoken_output_paths", "scope_evidence"}, {'runtime_output_paths'} if version == 3 else ())
         spoken = texts(d["story"]["spoken_output_paths"])
         if set(spoken) - set(scope) or d["story"]["scope_evidence"] not in d["artifacts"]:
             fail("INVALID_DESIGN", "dialogue applicability must be bound to the reviewed output scope and a full source artifact")
+        if version == 3:
+            runtime = texts(d['story'].get('runtime_output_paths'))
+            if set(runtime) - set(scope):
+                fail('INVALID_DESIGN', 'runtime applicability must be part of reviewed production scope')
+            from .story_profile import resolve
+            profile = resolve(roots['game'], project(roots['game'])['authority_paths'], roots['factory'])
+            if profile['medium'] == 'standalone' and runtime:
+                fail('INVALID_DESIGN', 'standalone Story cannot claim engine output; adopt an explicit game adapter first')
+    elif version == 3 and d['capability'] == 'story':
+        fail('INVALID_DESIGN', 'v3 Story requires explicit spoken/runtime applicability and scope evidence')
     if d["capability"] in ("studio", "gameplay"):
         from gameplay.v2 import validate_design
         validate_design(roots, d)
@@ -190,7 +214,7 @@ def dependencies(roots: dict, design_ref: dict, d: dict) -> dict:
     refs += d["inputs"] + d["artifacts"]
     refs += [r["source"] for r in d["requirements"].values()]
     refs += authority_refs(roots["game"], d["capability"], p["authority_paths"])
-    refs += factory_dependencies(roots["factory"], d["capability"], d["task"])
+    refs += factory_dependencies(roots["factory"], d["capability"], d["task"], p["workflow_version"], d.get("methods", []))
     refs = expand_references(roots, unique_refs(refs))
     for ref in refs:
         resolve_ref(roots, ref)
@@ -270,9 +294,10 @@ def check_ruling(roots, ref, design_ref, binding):
 
 
 def verify_record(roots: dict, record: dict):
+    ensure_current_task(roots['game'], record['task_id'])
     if record["stage"] in ("AUTHORIZED", "PRODUCING", "EVIDENCE_READY", "COMPLETE"):
         register_path = confined(roots["game"], "design/product/PRODUCT_AUTHORITY_REGISTER.json")
-        if register_path.exists() and read_json(register_path).get("status") != "ACTIVE":
+        if register_path.exists() and read_json(register_path).get("status") != "ACTIVE" and not independent_story(roots, record):
             fail("NO_ACTIVE_PRODUCT_AUTHORITY", "archived or unknown product cannot authorize production")
     for ref in record["artifacts"]:
         resolve_ref(roots, ref)
@@ -307,6 +332,7 @@ def checkpoint(roots: dict, request: dict) -> dict:
     texts(request["unresolved"])
     game = roots["game"]
     project(game)
+    ensure_current_task(game, task_id)
     with project_lock(game):
         previous, previous_digest = latest(game, task_id)
         if request["previous"] != previous_digest:
@@ -354,3 +380,17 @@ def checkpoint(roots: dict, request: dict) -> dict:
         return {"status": "CHECKPOINT_SAVED", "checkpoint": reference(game, path),
                 "stage": stage, "dependency_fingerprint": (record["dependencies"] or {}).get("fingerprint"),
                 "delivery_eligible": False}
+
+
+def ensure_current_task(game, task_id):
+    if project(game)['workflow_version'] == 3:
+        receipt = read_json(confined(game, 'design/factory/ROUTING_RECEIPT.json'))
+        if task_id in receipt.get('historical_tasks', []):
+            fail('HISTORICAL_WORKFLOW_REQUIRED', 'migration preserves this task as history; create a new task citing it')
+
+
+def independent_story(roots, record):
+    if record['capability'] != 'story' or project(roots['game'])['workflow_version'] != 3:
+        return False
+    from .story_profile import resolve
+    return resolve(roots['game'], project(roots['game'])['authority_paths'], roots['factory'])['medium'] == 'standalone'

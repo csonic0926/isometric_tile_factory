@@ -5,7 +5,7 @@ from pathlib import Path
 
 from .catalog import DOCS, authority_refs, method_paths
 from .migration import inventory
-from .refs import FactoryError, confined, fail, read_json, reference, resolve_ref, expand_references
+from .refs import FactoryError, confined, fail, read_json, reference, resolve_ref, expand_references, unique_refs
 from .state import (PROJECT_PATH, ROLES, STAGES, dependencies, latest, load_design,
                     project, requirement_ids, verify_record)
 
@@ -30,6 +30,9 @@ def inspect(roots: dict, task_id: str | None = None) -> dict:
     try:
         p = project(game)
         result["workflow_version"] = p["workflow_version"]
+        if p['workflow_version'] == 3:
+            from .astra import WORKFLOW
+            result.update(workflow='gpt6', process_source=reference(roots['factory'], WORKFLOW, 'factory'))
         result["project_id"] = p["project_id"]
         result["status"], result["next_action"] = "PROJECT_READY", "context"
         register_path = confined(game, "design/product/PRODUCT_AUTHORITY_REGISTER.json")
@@ -37,6 +40,14 @@ def inspect(roots: dict, task_id: str | None = None) -> dict:
             status = read_json(register_path).get("status")
             if status == "NO_ACTIVE_PRODUCT_AUTHORITY":
                 result["status"], result["next_action"] = status, "idea exploration"
+                if p['workflow_version'] == 3:
+                    from .story_profile import resolve
+                    try:
+                        if resolve(game, p['authority_paths'], roots['factory'])['medium'] == 'standalone':
+                            result.update(status='INDEPENDENT_STORY_READY', game_product_status=status,
+                                next_action='story context; game production remains blocked')
+                    except FactoryError:
+                        pass  # Missing Story profile does not imply standalone authority.
             elif status != "ACTIVE":
                 fail("UNKNOWN_AUTHORITY_STATE", "unsupported product lifecycle state")
             else:
@@ -57,6 +68,8 @@ def inspect(roots: dict, task_id: str | None = None) -> dict:
                         "COMPLETE": "inspect specialist acceptance"}[record["stage"]]
                 except FactoryError as exc:
                     item["status"], item["next_action"] = exc.code, "revalidate; do not rehash old reviews"
+                    if exc.code == 'HISTORICAL_WORKFLOW_REQUIRED':
+                        item['next_action'] = 'create a new v3 task citing historical sources; do not rewrite the old chain'
                     result["blockers"].append({"code": exc.code, "message": str(exc), "task_id": identity})
                 tasks.append(item)
         result["tasks"] = tasks
@@ -72,7 +85,7 @@ def inspect(roots: dict, task_id: str | None = None) -> dict:
     return result
 
 
-def context(roots: dict, capability: str, task: str, role="author", task_id=None, design=None) -> dict:
+def context(roots: dict, capability: str, task: str, role="author", task_id=None, design=None, methods=()) -> dict:
     # Never return inspect/history, expected answers, source paths or checkpoint
     # summaries to a blind observer. Existing player_surface protocol owns its
     # separately sanitized/attested packet and sealed comparison.
@@ -83,18 +96,29 @@ def context(roots: dict, capability: str, task: str, role="author", task_id=None
         fail("UNKNOWN_ROLE", role)
     game, factory = roots["game"], roots["factory"]
     p = project(game)
+    native = p['workflow_version'] == 3
+    if methods and not native:
+        fail('MIGRATION_REQUIRED', '--method requires the explicitly selected GPT-6 workflow')
     record, previous = latest(game, task_id) if task_id else (None, None)
     if design is None and record:
         design = record["design"]
     result = {"schema_version": "factory_context.v2", "role": role, "authority": False,
               "capability": capability, "task": task,
-              "constraints": [], "methods": method_paths(factory, capability, task)}
+              "constraints": [], "methods": method_paths(factory, capability, task) if not native else []}
+    if native:
+        from .astra import WORKFLOW, catalog, docs, rule_source, selected_methods
+        result.update(schema_version='factory_context.v3', workflow_version=3,
+                      methods=catalog(factory, capability, task),
+                      selected_methods=[source_view(roots, r) for r in selected_methods(factory, capability, task, list(methods))])
     contracts=["design.schema.json","checkpoint_request.schema.json","review.schema.json","ruling.schema.json"]
     if capability=="story":contracts.append("story_output_acceptance.schema.json")
+    if native:
+        contracts[0] = 'design_v3.schema.json'
+        if capability == 'story': contracts[-1] = 'story_output_acceptance_v3.schema.json'
     result["contracts"]=[reference(factory,"factory_core/schemas/"+name,"factory") for name in contracts]
     refs = authority_refs(game, capability, p["authority_paths"])
-    refs += [reference(factory, name, "factory") for name in ["factory_core/docs/WORKFLOW.md", *DOCS[capability]]]
-    for ref in refs:
+    refs += [reference(factory, name, "factory") for name in ([WORKFLOW, *docs(capability)] if native else ["factory_core/docs/WORKFLOW.md", *DOCS[capability]])]
+    for ref in unique_refs(refs):
         result["constraints"].append(source_view(roots,ref))
     if role == "author":
         result["work"] = ({k: record[k] for k in ("stage", "summary", "unresolved", "artifacts")} if record else None)
@@ -106,11 +130,19 @@ def context(roots: dict, capability: str, task: str, role="author", task_id=None
         binding = dependencies(roots, design, d)
         result.update(design=design, dependency_fingerprint=binding["fingerprint"],
                       source_references=[r for r in binding["references"] if r["scope"] != "factory"], decisions=d["decisions"])
-        result["design_artifacts"] = [source_view(roots,ref) for ref in d["artifacts"] + d["inputs"]]
+        result["design_artifacts"] = [source_view(roots,ref) for ref in unique_refs(d["artifacts"] + d["inputs"]) if ref not in refs]
+        if native:
+            result['decision_sections'] = d['decision_sections']
+            if capability in ('gameplay', 'studio'):
+                from gameplay.native import production_units
+                result['production_units'] = production_units(roots, d)
+            if methods and set(methods) - set(d.get('methods', [])):
+                fail('METHOD_NOT_BOUND', 'selected method changes the sealed design; record it in a new draft before review')
+            result['selected_methods'] = [source_view(roots, r) for r in selected_methods(factory, capability, task, d.get('methods', []))]
         if role in ROLES:
             result["review_requirements"] = sorted(requirement_ids(factory, d, role))
             rules = read_json(factory / "factory_core/rule_map.json")["rules"]
-            source_paths = sorted({r["source"] for r in rules if r["id"] in result["review_requirements"]})
+            source_paths = sorted({rule_source(r) if native else r["source"] for r in rules if r["id"] in result["review_requirements"]})
             result["review_sources"] = [reference(factory, p, "factory") for p in source_paths]
             result["review_rule"] = "Fresh non-author first pass; do not read any peer review. Review the entire exact design, not author-selected claims."
         if role == "human":

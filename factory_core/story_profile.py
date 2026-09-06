@@ -47,11 +47,11 @@ def resolve(game, extra=(), factory=None):
     profile=confined(game,profile.relative_to(game).as_posix())
     if not profile.is_file(): fail('BLOCKED_BY_PROFILE','missing adopted Story profile')
     body=profile.read_text()
-    root_value=field(body,'STORY_ROOT').replace('<GAME_REPO>',str(game)).strip('`')
+    root_value=field(body,'STORY_ROOT').replace('<GAME_REPO>',str(game)).replace('<PROJECT_ROOT>',str(game)).strip('`')
     story_root=Path(root_value)
     if not story_root.is_absolute(): story_root=game/story_root
     if not story_root.is_relative_to(game): fail('BLOCKED_BY_PROFILE','Story root must be inside this game')
-    story_root=confined(game,story_root.relative_to(game).as_posix())
+    story_root=game if story_root == game else confined(game,story_root.relative_to(game).as_posix())
     primary=field(body,'PRIMARY_LOCALE')
     locales=[s.strip().strip('`') for s in field(body,'SHIPPED_LOCALES').split(',')]
     if (not locales or len(set(locales))!=len(locales) or primary not in locales
@@ -62,5 +62,16 @@ def resolve(game, extra=(), factory=None):
     if not any(p.is_file() for p in sovereignty):
         fail('BLOCKED_BY_PROFILE','Story sovereignty is missing; never infer it from runtime')
     paths.extend(p.relative_to(game).as_posix() for p in sovereignty if p.is_file())
+    metadata = confined(game, 'design/factory/PROJECT.json')
+    native = metadata.exists() and read_json(metadata).get('workflow_version') == 3
+    medium = field(body, 'MEDIUM') if native else 'game'
+    if medium not in ('game', 'standalone'):
+        fail('BLOCKED_BY_PROFILE', 'MEDIUM must be game or standalone')
+    if native:
+        if field(body, 'PROJECT_ID') != read_json(metadata)['project_id']:
+            fail('BLOCKED_BY_PROFILE', 'Story profile belongs to another project')
+        field(body, 'WORLD_NAME')
+        if medium == 'standalone' and not all(p.is_file() for p in sovereignty[:2]):
+            fail('BLOCKED_BY_PROFILE', 'standalone Story needs explicit WORLD_RULES and NARRATIVE_DELIVERY')
     return dict(profile=reference(game,profile.relative_to(game).as_posix()),story_root=story_root,
-                authority_paths=sorted(set(paths)),shipped_locales=locales,primary_locale=primary)
+                authority_paths=sorted(set(paths)),shipped_locales=locales,primary_locale=primary,medium=medium)
