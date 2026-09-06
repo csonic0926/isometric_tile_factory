@@ -18,13 +18,13 @@ files are byte-identical to stable main. No game repository/backup was copied.
 | Suite | Result |
 | --- | --- |
 | entry/setup unittest | 25 PASS |
-| factory_core unittest | 106 PASS (74 existing + 32 adaptation cases) |
+| factory_core unittest | 109 PASS (74 existing + 35 adaptation cases) |
 | Studio unittest | 144 PASS |
 | Gameplay unittest | 207 PASS |
 | Idea unittest | 29 PASS |
 | Asset pytest | 37 PASS + 11 subtests PASS |
 
-Total: 548 regular tests, plus Asset's 11 subtests. Shared-core tests include
+Total: 551 regular tests, plus Asset's 11 subtests. Shared-core tests include
 real isolated Godot execution, repeated UI/state regression and the native
 complete admission consumer chain. Fixture review/human records are synthetic
 contract data, never actual USER acceptance. Sound trim/normalization and compact
@@ -88,3 +88,22 @@ production state must be read in Empire itself. Its old pending slice must not
 be relabeled accepted. The revoked coastal prerequisite must not be restored.
 Complete-campaign production, real-media fitness, real standalone-story creative
 acceptance and USER feedback remain distinct from these engineering results.
+
+## Pilot-driven recovery correction
+
+Real Empire opt-in/run exposed a context recovery ambiguity: author context
+showed the recorded stage without explicitly checking that its checkpoint was
+still valid. Native context now reports work_status, blockers and next_action;
+stale work does not acquire a fresh dependency fingerprint automatically. An
+explicit proposed design is marked as requiring a new draft. Wrong task identity
+is rejected even for a draft without a complete design. Three added regression
+tests pass; the original v2 context surface and blind isolation remain intact.
+
+Empire has now completed explicit v3 migration, repeat-migration no-op, six
+retained Godot test scenes/startup, and five newly rendered fixture views. Its
+pre-existing project.godot and historical content remained byte-identical; the
+only modified pre-existing tracked file was managed AGENTS routing. This is old
+runtime regression, NOT new campaign production. USER selected original phase
+order; a successor phase/information design and P01-P10 impact audit are DRAFT
+in Empire. Its final package, independent reviews and changed-gameplay
+authorization are still outstanding. No accepted baseline was created.

@@ -9,6 +9,11 @@ from .refs import FactoryError, confined, fail, read_json, reference, resolve_re
 from .state import (PROJECT_PATH, ROLES, STAGES, dependencies, latest, load_design,
                     project, requirement_ids, verify_record)
 
+STAGE_ACTIONS = {"DRAFT": "continue authoring", "DESIGN_COMPLETE": "independent boundary reviews",
+                 "REVIEWED": "exact human ruling", "AUTHORIZED": "production within frozen scope",
+                 "PRODUCING": "collect exact-output evidence", "EVIDENCE_READY": "specialist acceptance",
+                 "COMPLETE": "inspect specialist acceptance"}
+
 
 def source_view(roots,ref):
     path=resolve_ref(roots,ref)
@@ -62,10 +67,7 @@ def inspect(roots: dict, task_id: str | None = None) -> dict:
                 try:
                     verify_record(roots, record)
                     item["status"] = "CURRENT_CHECKPOINT"
-                    item["next_action"] = {"DRAFT": "continue authoring", "DESIGN_COMPLETE": "independent boundary reviews",
-                        "REVIEWED": "exact human ruling", "AUTHORIZED": "production within frozen scope",
-                        "PRODUCING": "collect exact-output evidence", "EVIDENCE_READY": "specialist acceptance",
-                        "COMPLETE": "inspect specialist acceptance"}[record["stage"]]
+                    item["next_action"] = STAGE_ACTIONS[record["stage"]]
                 except FactoryError as exc:
                     item["status"], item["next_action"] = exc.code, "revalidate; do not rehash old reviews"
                     if exc.code == 'HISTORICAL_WORKFLOW_REQUIRED':
@@ -100,6 +102,9 @@ def context(roots: dict, capability: str, task: str, role="author", task_id=None
     if methods and not native:
         fail('MIGRATION_REQUIRED', '--method requires the explicitly selected GPT-6 workflow')
     record, previous = latest(game, task_id) if task_id else (None, None)
+    explicit_design = design is not None
+    if native and record and (record['capability'], record['task']) != (capability, task):
+        fail('WRONG_TASK', 'checkpoint capability/task mismatch')
     if design is None and record:
         design = record["design"]
     result = {"schema_version": "factory_context.v2", "role": role, "authority": False,
@@ -123,6 +128,22 @@ def context(roots: dict, capability: str, task: str, role="author", task_id=None
     if role == "author":
         result["work"] = ({k: record[k] for k in ("stage", "summary", "unresolved", "artifacts")} if record else None)
         result["previous"] = previous
+        if native:
+            result.update(work_status='NO_CHECKPOINT', next_action='checkpoint a new draft', blockers=[])
+            if record:
+                try:
+                    verify_record(roots, record)
+                    result.update(work_status='CURRENT_CHECKPOINT', next_action=STAGE_ACTIONS[record['stage']])
+                except FactoryError as exc:
+                    result.update(work_status=exc.code,
+                        next_action='checkpoint a new draft from current sources; do not rehash old reviews')
+                    result['blockers'].append({'code': exc.code, 'message': str(exc)})
+                    if not explicit_design:
+                        # Return current authority and the failed work references,
+                        # not a newly fingerprinted view of an old authorization.
+                        design = None
+                if explicit_design and design != record.get('design'):
+                    result['next_action'] = 'checkpoint the proposed design as a new draft before review or production'
     if design:
         d = load_design(roots, design)
         if (d["capability"], d["task"]) != (capability, task):

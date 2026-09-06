@@ -204,5 +204,36 @@ class Gpt6Tests(unittest.TestCase):
         self.assertEqual(c['work']['stage'], 'DRAFT')
         self.assertNotIn('design', c)
 
+    def test_resume_context_reports_current_stage_and_wrong_task(self):
+        self.migrate()
+        checkpoint(self.roots, self.request())
+        c = context(self.roots, 'asset', 'prop', task_id='lantern')
+        self.assertEqual(c['work_status'], 'CURRENT_CHECKPOINT')
+        self.assertEqual(c['next_action'], 'continue authoring')
+        self.assertFalse(c['blockers'])
+        with self.assertRaisesRegex(FactoryError, 'checkpoint capability/task mismatch'):
+            context(self.roots, 'idea', 'exploration', task_id='lantern')
+
+    def test_resume_context_never_refreshes_stale_design_work(self):
+        d, ref = self.design()
+        checkpoint(self.roots, self.request('DESIGN_COMPLETE', design=ref))
+        self.write('RULES.md', 'A new USER constraint applies.')
+        c = context(self.roots, 'asset', 'prop', task_id='lantern')
+        self.assertEqual(c['work_status'], 'REVALIDATION_REQUIRED')
+        self.assertTrue(c['blockers'])
+        self.assertIn('new draft', c['next_action'])
+        self.assertNotIn('dependency_fingerprint', c)
+        self.assertIn('A new USER constraint applies.', '\n'.join(x.get('text', '') for x in c['constraints']))
+
+    def test_proposed_design_view_is_not_old_authorization(self):
+        d, ref = self.design()
+        checkpoint(self.roots, self.request('DESIGN_COMPLETE', design=ref))
+        d['intent'] = 'A revised proposal, not an approved update.'
+        proposed = self.write('design/assets/PROPOSED.json', d)
+        c = context(self.roots, 'asset', 'prop', task_id='lantern', design=proposed)
+        self.assertEqual(c['work_status'], 'CURRENT_CHECKPOINT')
+        self.assertIn('proposed design as a new draft', c['next_action'])
+        self.assertEqual(c['design'], proposed)
+
 
 if __name__ == '__main__': unittest.main()

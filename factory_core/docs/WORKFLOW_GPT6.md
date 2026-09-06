@@ -16,6 +16,10 @@ limitations stay in full; no token target permits dropping authority.
 Continue authorship and production in the same primary agent. Create full works,
 not summaries that fill a schema. Checkpoint references at meaningful boundaries
 or interruption. On resume, inspect the checked ledger; chat memory is not state.
+Author context reports checkpoint validity and the next legal action. A stale
+checkpoint returns current authority plus explicit blockers, never a refreshed
+fingerprint masquerading as the old authorization. Proposed designs must be
+checkpointed as new drafts before their own review/production boundary.
 No mandatory per-step workers, fixed paragraph sizes, intermediate handoff files,
 generic review on each reply, or independent Card/spec authors. Former process
 clauses in project-generated Factory documents are superseded, not their quality
