@@ -1,13 +1,23 @@
 # AGENTS — Game Studio Factory
 
-## Branch policy
+## Branch and consumer-isolation policy
 
-- Keep exactly one local and remote branch: `main`.
-- Work, commit, and push directly on `main`; never create, check out, or push
-  feature, agent, task, backup, safety, or other non-`main` branches.
-- If a non-`main` branch already exists, preserve any required work by moving it
-  into `main`, verify the result, then delete the non-`main` branch locally and
-  remotely.
+USER authorized a separate GPT-6 adaptation branch on 2026-09-06. This replaces
+the former main-only policy; do not delete the adaptation branch under that old
+rule.
+
+- `main` is the stable shared line for existing partners and installed skills.
+- `gpt-6-adaptation` is the opt-in line for model-adapted Factory research,
+  planning, implementation, and validation. Commit and push its work there;
+  do not merge it into `main` without explicit USER approval.
+- Keep the existing shared checkout on `main`. Develop the adaptation in its
+  own Git worktree, not by switching the checkout targeted by installed skill
+  symlinks or existing project pointers.
+- Do not globally reinstall skills or relink unrelated projects to the
+  experimental worktree. Experimental consumers must opt in explicitly.
+- These are the only authorized branches. Do not create backup/safety branches
+  or duplicate repositories/files as backups; normal Git history preserves
+  committed work. A development worktree is an active workspace, not a backup.
 
 This repository contains the autonomous **Game Studio Factory** operator plus
 its specialist **Game AI Factories**.
